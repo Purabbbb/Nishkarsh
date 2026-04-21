@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — निष्KARSH</title>
+    <meta name="description" content="Upload research papers and get AI-powered structured summaries with the Nishkarsh dashboard.">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- ═══ Sidebar ═══ -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span class="hindi">निष्</span>KARSH
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="active">
+                    <span class="nav-icon">📊</span> Dashboard
+                </a>
+                <a href="#">
+                    <span class="nav-icon">📄</span> My Papers
+                </a>
+                <a href="#">
+                    <span class="nav-icon">📜</span> History
+                </a>
+                <a href="#">
+                    <span class="nav-icon">⚙️</span> Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="avatar">PB</div>
+                <div class="user-info">
+                    <div class="user-name">Purab Bhatia</div>
+                    <div class="user-email">purab@nishkarsh.ai</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ═══ Main Content ═══ -->
+        <main class="dashboard-main">
+            <!-- Header -->
+            <div class="dash-header">
+                <h1>📊 Dashboard</h1>
+                <div class="dash-header-actions">
+                    <button class="btn-outline" onclick="resetForm()" style="font-size: 13px; padding: 10px 20px;">
+                        ➕ New Paper
+                    </button>
+                    <a href="/" class="btn-ghost" style="font-size: 13px;">
+                        🏠 Home
+                    </a>
+                </div>
+            </div>
+
+            <!-- ═══ Upload Area ═══ -->
+            <div class="upload-area" id="uploadArea">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-icon">📄</div>
+                    <h3>Drag & Drop your Research Paper</h3>
+                    <p>or click to browse — PDF files only, max 50 MB</p>
+                    <input type="file" id="fileInput" accept=".pdf">
+                </div>
+
+                <div class="file-info" id="fileInfo">
+                    <span class="file-icon">📎</span>
+                    <div class="file-details">
+                        <div class="file-name" id="fileName"></div>
+                        <div class="file-size" id="fileSize"></div>
+                    </div>
+                    <button class="remove-btn" id="removeBtn" title="Remove file">✕</button>
+                </div>
+
+                <button class="btn-summarize" id="summarizeBtn" disabled>
+                    🔬 Generate Summary
+                </button>
+
+                <div class="error-msg" id="errorMsg"></div>
+            </div>
+
+            <!-- ═══ Loading ═══ -->
+            <div class="loading-overlay" id="loadingSection">
+                <div class="spinner"></div>
+                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Analyzing your paper...</h3>
+                <p style="font-size: 14px; color: var(--text-muted);">Extracting text, chunking, and generating summary with BART. This may take a minute.</p>
+                <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <span class="badge" id="statusBadge">Processing...</span>
+                </div>
+            </div>
+
+            <!-- ═══ Results ═══ -->
+            <div class="results-section" id="resultSection">
+                <!-- Results Header -->
+                <div class="results-header">
+                    <h2>📝 <span class="text-gradient">Research Breakdown</span></h2>
+                    <div class="results-meta">
+                        <span class="meta-chip" id="metaPages">📄 — pages</span>
+                        <span class="meta-chip" id="metaChars">🔤 — chars</span>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-bar" id="tabsBar">
+                    <button class="tab-btn active" data-tab="summary" onclick="switchTab('summary')">📋 Summary</button>
+                    <button class="tab-btn" data-tab="methodology" onclick="switchTab('methodology')">🔬 Methodology</button>
+                    <button class="tab-btn" data-tab="findings" onclick="switchTab('findings')">🔍 Key Findings</button>
+                    <button class="tab-btn" data-tab="limitations" onclick="switchTab('limitations')">⚠️ Limitations</button>
+                    <button class="tab-btn" data-tab="conclusion" onclick="switchTab('conclusion')">✅ Conclusion</button>
+                </div>
+
+                <div class="tab-content">
+                    <div class="summary-text" id="summaryContent">Select a tab to view the summary.</div>
+                </div>
+
+                <!-- Action Row -->
+                <div class="action-row">
+                    <button class="btn-action btn-tts" id="ttsBtn" onclick="speakSummary()">
+                        🔊 Listen to Summary
+                    </button>
+                    <button class="btn-action btn-stop" id="stopTtsBtn" onclick="stopSpeech()">
+                        ⏹ Stop
+                    </button>
+                    <button class="btn-action btn-speech" id="speechBtn" onclick="toggleSpeechToText()">
+                        🎤 Speech to Text
+                    </button>
+                    <button class="btn-action btn-copy" onclick="copySummary()">
+                        📋 Copy
+                    </button>
+                    <button class="btn-action btn-new" onclick="resetForm()">
+                        🔄 New Paper
+                    </button>
+                </div>
+
+                <!-- Speech-to-Text Output -->
+                <div id="speechOutput" style="display: none; margin-top: 20px;">
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <span style="font-size: 18px;">🎙️</span>
+                            <h4 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px;">Voice Transcription</h4>
+                            <span id="speechStatus" class="badge" style="font-size: 10px; padding: 3px 10px; margin-left: auto;">Ready</span>
+                        </div>
+                        <p id="speechText" style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); min-height: 40px; padding: 12px; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                            Click "Speech to Text" and start speaking...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ═══ Chatbot ═══ -->
+    <div class="chatbot-panel">
+        <button class="chatbot-toggle" id="chatToggle" onclick="toggleChat()" title="Open RAG Chatbot">
+            💬
+        </button>
+        <div class="chatbot-window" id="chatWindow">
+            <div class="chat-header">
+                <h3><span class="dot"></span> RAG Assistant</h3>
+                <button class="close-chat" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg bot">
+                    👋 Hi! I'm the <strong>Nishkarsh</strong> RAG assistant. Upload a paper first, then ask me anything about it — like "What dataset did they use?" or "Explain the methodology."
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Ask about the paper..." onkeydown="if(event.key==='Enter')sendChat()">
+                <button onclick="sendChat()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ JavaScript ═══ -->
+    <script>
+        // ── DOM References ──
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeBtn = document.getElementById('removeBtn');
+        const summarizeBtn = document.getElementById('summarizeBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const loadingSection = document.getElementById('loadingSection');
+        const resultSection = document.getElementById('resultSection');
+        const summaryContent = document.getElementById('summaryContent');
+        const errorMsg = document.getElementById('errorMsg');
+
+        let selectedFile = null;
+        let sections = { summary: '', methodology: '', findings: '', conclusion: '', limitations: '' };
+        let currentActiveSection = 'summary';
+        let recognition = null;
+        let isRecording = false;
+
+        // ── Drag & Drop ──
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.name.toLowerCase().endsWith('.pdf')) {
+                showError('Please upload a PDF file.'); return;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showError('File is too large. Max 50 MB.'); return;
+            }
+            selectedFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = formatSize(file.size);
+            fileInfo.classList.add('visible');
+            summarizeBtn.disabled = false;
+            hideError();
+        }
+
+        removeBtn.addEventListener('click', () => {
+            selectedFile = null;
+            fileInput.value = '';
+            fileInfo.classList.remove('visible');
+            summarizeBtn.disabled = true;
+        });
+
+        // ── Summarize ──
+        summarizeBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+            uploadArea.style.display = 'none';
+            loadingSection.classList.add('visible');
+            resultSection.classList.remove('visible');
+            hideError();
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                const response = await fetch('/summarize', { method: 'POST', body: formData });
+                const data = await response.json();
+                loadingSection.classList.remove('visible');
+
+                if (data.success) {
+                    sections = data.sections;
+                    switchTab('summary');
+                    document.getElementById('metaPages').textContent = `📄 ${data.num_pages} pages`;
+                    document.getElementById('metaChars').textContent = `🔤 ${data.extracted_chars.toLocaleString()} chars`;
+                    resultSection.classList.add('visible');
+                } else {
+                    showError(data.error || 'Summarization failed.');
+                    uploadArea.style.display = 'block';
+                }
+            } catch (err) {
+                loadingSection.classList.remove('visible');
+                showError('Connection error. Make sure the server is running.');
+                uploadArea.style.display = 'block';
+            }
+        });
+
+        // ── Tab Switching ──
+        function switchTab(section) {
+            currentActiveSection = section;
+            summaryContent.textContent = sections[section] || 'No information available for this section.';
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === section);
+            });
+        }
+
+        // ── TTS (Browser SpeechSynthesis) ──
+        function speakSummary() {
+            const text = sections[currentActiveSection];
+            if (!text) return;
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
+
+                document.getElementById('ttsBtn').style.display = 'none';
+                document.getElementById('stopTtsBtn').style.display = 'flex';
+
+                utterance.onend = () => {
+                    document.getElementById('ttsBtn').style.display = 'flex';
+                    document.getElementById('stopTtsBtn').style.display = 'none';
+                };
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showError('Your browser does not support text-to-speech.');
+            }
+        }
+
+        function stopSpeech() {
+            window.speechSynthesis.cancel();
+            document.getElementById('ttsBtn').style.display = 'flex';
+            document.getElementById('stopTtsBtn').style.display = 'none';
+        }
+
+        // ── Speech to Text ──
+        function toggleSpeechToText() {
+            const speechBtn = document.getElementById('speechBtn');
+            const speechOutput = document.getElementById('speechOutput');
+            const speechStatus = document.getElementById('speechStatus');
+            const speechText = document.getElementById('speechText');
+
+            speechOutput.style.display = 'block';
+
+            if (isRecording) {
+                // Stop
+                if (recognition) recognition.stop();
+                isRecording = false;
+                speechBtn.classList.remove('recording');
+                speechBtn.innerHTML = '🎤 Speech to Text';
+                speechStatus.textContent = 'Stopped';
+                return;
+            }
+
+            // Start
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showError('Speech recognition not supported in your browser. Try Chrome.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            let finalTranscript = '';
+
+            recognition.onstart = () => {
+                isRecording = true;
+                speechBtn.classList.add('recording');
+                speechBtn.innerHTML = '⏹ Stop Recording';
+                speechStatus.textContent = 'Listening...';
+                speechStatus.style.color = 'var(--error)';
+            };
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript + ' ';
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+                speechText.innerHTML = finalTranscript + '<span style="color: var(--text-muted); font-style: italic;">' + interimTranscript + '</span>';
+            };
+
+            recognition.onerror = (event) => {
+                speechStatus.textContent = 'Error: ' + event.error;
+                isRecording = false;
+                speechBtn.classList.remove('recording');
+                speechBtn.innerHTML = '🎤 Speech to Text';
+            };
+
+            recognition.onend = () => {
+                if (isRecording) {
+                    recognition.start(); // Auto-restart
+                } else {
+                    speechStatus.textContent = 'Done';
+                    speechStatus.style.color = '';
+                }
+            };
+
+            recognition.start();
+        }
+
+        // ── Copy ──
+        function copySummary() {
+            const text = sections[currentActiveSection];
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                setTimeout(() => btn.innerHTML = orig, 2000);
+            });
+        }
+
+        // ── Reset ──
+        function resetForm() {
+            window.speechSynthesis.cancel();
+            if (recognition) { recognition.stop(); isRecording = false; }
+            selectedFile = null;
+            fileInput.value = '';
+            fileInfo.classList.remove('visible');
+            summarizeBtn.disabled = true;
+            resultSection.classList.remove('visible');
+            loadingSection.classList.remove('visible');
+            uploadArea.style.display = 'block';
+            document.getElementById('speechOutput').style.display = 'none';
+            sections = { summary: '', methodology: '', findings: '', conclusion: '', limitations: '' };
+        }
+
+        // ── Chatbot ──
+        function toggleChat() {
+            const win = document.getElementById('chatWindow');
+            win.classList.toggle('open');
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            addChatMsg(msg, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            const typingEl = document.createElement('div');
+            typingEl.className = 'chat-msg typing';
+            typingEl.id = 'typingIndicator';
+            typingEl.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+            document.getElementById('chatMessages').appendChild(typingEl);
+            scrollChat();
+
+            // Call chatbot API
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: msg })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const typing = document.getElementById('typingIndicator');
+                if (typing) typing.remove();
+
+                if (data.answer) {
+                    addChatMsg(data.answer, 'bot');
+                } else if (data.error) {
+                    addChatMsg('⚠️ ' + data.error, 'bot');
+                } else {
+                    addChatMsg("Sorry, I couldn't process that. Please try again.", 'bot');
+                }
+            })
+            .catch(() => {
+                const typing = document.getElementById('typingIndicator');
+                if (typing) typing.remove();
+                addChatMsg("⚠️ Connection error. Is the server running?", 'bot');
+            });
+        }
+
+        function addChatMsg(text, type) {
+            const el = document.createElement('div');
+            el.className = `chat-msg ${type}`;
+            el.textContent = text;
+            document.getElementById('chatMessages').appendChild(el);
+            scrollChat();
+        }
+
+        function scrollChat() {
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ── Utilities ──
+        function showError(msg) {
+            errorMsg.textContent = '⚠️ ' + msg;
+            errorMsg.classList.add('visible');
+        }
+        function hideError() {
+            errorMsg.classList.remove('visible');
+        }
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+    </script>
+</body>
+</html>

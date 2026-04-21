@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>निष्KARSH — Intelligent Research Paper Summarizer</title>
+    <meta name="description" content="Nishkarsh is an AI-powered research paper summarizer that rewrites complex papers in simple language using a fine-tuned NLP model, interactive Q&A chatbot, and text-to-speech.">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- ═══ Navbar ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">
+                <span class="hindi">निष्</span>KARSH
+            </a>
+            <div class="nav-links">
+                <a href="#challenge">The Problem</a>
+                <a href="#solution">Our Solution</a>
+                <a href="#architecture">How It Works</a>
+                <a href="#dataset">Dataset</a>
+            </div>
+            <div class="nav-cta">
+                <a href="/login" class="btn-ghost">Log In</a>
+                <a href="/login" class="btn-primary" style="padding: 10px 24px; font-size: 14px;">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ Hero Section ═══ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="/static/img/Star1.png?v=2" class="hero-star" alt="Nishkarsh Star">
+            <div class="glow-orb"></div>
+            <div class="glow-orb"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">⚡ Powered by Fine-Tuned BART + RAG</div>
+                <h1><span class="hindi-text">निष्</span>KARSH</h1>
+                <p class="subtitle">A Research Paper Summarizer</p>
+                <p class="description">
+                    An intelligent NLP research assistant that doesn't just shorten text — it rewrites complex academic papers 
+                    in simple, teacher-like language. Upload any PDF and get structured summaries, ask questions via RAG chatbot, 
+                    and listen with text-to-speech.
+                </p>
+                <p class="authors">Harsh Arora &nbsp;&bull;&nbsp; Purab Bhatia</p>
+                <div class="hero-cta">
+                    <a href="/login" class="btn-primary">
+                        🚀 Try It Now
+                    </a>
+                    <a href="#solution" class="btn-outline">
+                        Learn More ↓
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Challenge Section ═══ -->
+    <section class="section section-challenge" id="challenge">
+        <div class="container">
+            <p class="section-label" style="color: rgba(0,0,0,0.5);">The Problem</p>
+            <h2 class="section-title">The Challenge: The "Accessibility Barrier" in Research</h2>
+            <div class="challenge-grid">
+                <ul class="challenge-list">
+                    <li class="challenge-item reveal-left">
+                        <span class="number">01</span>
+                        <div>
+                            <h3>Information Overload</h3>
+                            <p>Over 2.5 million scientific papers are published annually. Keeping up with the latest research is nearly impossible.</p>
+                        </div>
+                    </li>
+                    <li class="challenge-item reveal-left" style="transition-delay: 0.1s;">
+                        <span class="number">02</span>
+                        <div>
+                            <h3>The Complexity Wall</h3>
+                            <p>Research papers are written by experts for experts. They use dense jargon and complex math that creates a massive barrier for students and beginners.</p>
+                        </div>
+                    </li>
+                    <li class="challenge-item reveal-left" style="transition-delay: 0.2s;">
+                        <span class="number">03</span>
+                        <div>
+                            <h3>Static & One-Way</h3>
+                            <p>A PDF is a "dead" format. You cannot ask it to explain a specific equation or clarify a doubt. It is a monologue, not a dialogue.</p>
+                        </div>
+                    </li>
+                    <li class="challenge-item reveal-left" style="transition-delay: 0.3s;">
+                        <span class="number">04</span>
+                        <div>
+                            <h3>The Language Gap</h3>
+                            <p>For non-native English speakers, understanding high-level academic vocabulary is a double struggle.</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="challenge-visual reveal-right">
+                    <div class="paper-mockup">
+                        <h4 style="font-weight:700; font-size: 14px;">Electricity Consumption Prediction Using Multivariate CNN-LSTM</h4>
+                        <p style="font-size: 10px; color: #888; margin-bottom: 12px;">Dr. Parmeta Dhaliwal &bull; Harshita Singh &bull; Purab Bhatia</p>
+                        <div class="lines">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <p style="font-size: 9px; color: #bbb; margin-top: 10px; font-style: italic;">Abstract: Short-term electricity prediction for energy consumption is important, as it is challenged by volatile...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Solution Section ═══ -->
+    <section class="section section-solution" id="solution">
+        <div class="container">
+            <p class="section-label">Our Solution</p>
+            <h2 class="section-title">An <span class="text-gradient">Intelligent NLP</span> Research Assistant</h2>
+            <div class="solution-grid">
+                <div class="solution-card reveal" style="transition-delay: 0s;">
+                    <div class="card-number">01</div>
+                    <h3>Core Feature</h3>
+                    <p>A Fine‑Tuned Summarization Model that doesn't just shorten text, but rewrites it in "Layman's Terms" OR Abstractive Summary (Simulated Teacher Explanation) for each findings, methodology, conclusion and limitation.</p>
+                </div>
+                <div class="solution-card reveal" style="transition-delay: 0.15s;">
+                    <div class="card-number">02</div>
+                    <h3>Interactive Q&A (RAG)</h3>
+                    <p>A Retrieval-Augmented Generation (RAG) chatbot that allows users to ask specific questions like "What dataset did they use?" or "Explain the math in equation 3".</p>
+                </div>
+                <div class="solution-card reveal" style="transition-delay: 0.3s;">
+                    <div class="card-number">03</div>
+                    <h3>Accessibility Features</h3>
+                    <p><strong>Multilingual Support:</strong> Instant translation of summaries into native languages (e.g., Hindi).<br><br><strong>Voice Output:</strong> Audio walkthroughs of the summary for auditory learners using Text to Speech Models.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Architecture Section — Winding Road Roadmap ═══ -->
+    <section class="section section-architecture" id="architecture">
+        <div class="container">
+            <p class="section-label">How It Works</p>
+            <h2 class="section-title" style="text-align:center;">System Architecture & Flow</h2>
+        </div>
+
+        <!-- Roadmap wrapper -->
+        <div class="roadmap">
+            <!-- The SVG winding road -->
+            <svg class="roadmap-road" viewBox="0 0 1200 1800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <!-- Road shadow -->
+                <path d="M600,0 C600,100 200,150 200,350 C200,550 1000,550 1000,750 C1000,950 200,950 200,1150 C200,1350 1000,1350 1000,1550 C1000,1700 600,1800 600,1800"
+                      stroke="rgba(0,0,0,0.4)" stroke-width="110" stroke-linecap="round" fill="none"/>
+                <!-- Main road -->
+                <path d="M600,0 C600,100 200,150 200,350 C200,550 1000,550 1000,750 C1000,950 200,950 200,1150 C200,1350 1000,1350 1000,1550 C1000,1700 600,1800 600,1800"
+                      stroke="#2a2a2a" stroke-width="90" stroke-linecap="round" fill="none"/>
+                <!-- Road center dashes -->
+                <path d="M600,0 C600,100 200,150 200,350 C200,550 1000,550 1000,750 C1000,950 200,950 200,1150 C200,1350 1000,1350 1000,1550 C1000,1700 600,1800 600,1800"
+                      stroke="rgba(245,166,35,0.25)" stroke-width="4" stroke-linecap="round" stroke-dasharray="24 18" fill="none" class="road-dashes"/>
+                <!-- Road edge lines -->
+                <path d="M600,0 C600,100 200,150 200,350 C200,550 1000,550 1000,750 C1000,950 200,950 200,1150 C200,1350 1000,1350 1000,1550 C1000,1700 600,1800 600,1800"
+                      stroke="rgba(232,113,42,0.15)" stroke-width="92" stroke-linecap="round" fill="none" style="filter: blur(2px);"/>
+            </svg>
+
+            <!-- Progress glow that follows scroll -->
+            <svg class="roadmap-progress" viewBox="0 0 1200 1800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <path id="roadProgressPath" d="M600,0 C600,100 200,150 200,350 C200,550 1000,550 1000,750 C1000,950 200,950 200,1150 C200,1350 1000,1350 1000,1550 C1000,1700 600,1800 600,1800"
+                      stroke="url(#roadGlow)" stroke-width="6" stroke-linecap="round" fill="none" class="road-progress-line"/>
+                <defs>
+                    <linearGradient id="roadGlow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#e8712a"/>
+                        <stop offset="50%" stop-color="#f5a623"/>
+                        <stop offset="100%" stop-color="#fbbf6e"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Step 1 — Left side -->
+            <div class="roadmap-step roadmap-step--left road-reveal" data-step="1">
+                <div class="roadmap-step__content">
+                    <div class="roadmap-step__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="roadmap-step__text">
+                        <span class="roadmap-step__number">01</span>
+                        <h4>User Uploads PDF</h4>
+                        <p>The system ingests the raw PDF. PyPDF2 extracts text while the pre-processor removes noise like headers, footers, and citations.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step__dot"><span>1</span></div>
+            </div>
+
+            <!-- Step 2 — Right side -->
+            <div class="roadmap-step roadmap-step--right road-reveal" data-step="2">
+                <div class="roadmap-step__dot"><span>2</span></div>
+                <div class="roadmap-step__content">
+                    <div class="roadmap-step__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <div class="roadmap-step__text">
+                        <span class="roadmap-step__number">02</span>
+                        <h4>Data Processing</h4>
+                        <p>The workflow splits here. The Fine-Tuned BART Model begins summarizing, while ChromaDB simultaneously indexes the text for the chatbot.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 — Left side -->
+            <div class="roadmap-step roadmap-step--left road-reveal" data-step="3">
+                <div class="roadmap-step__content">
+                    <div class="roadmap-step__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <div class="roadmap-step__text">
+                        <span class="roadmap-step__number">03</span>
+                        <h4>View Summary</h4>
+                        <p>The user receives a 'Teacher-Style' explanation generated by our custom NLP model, simplifying complex jargon into plain English.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step__dot"><span>3</span></div>
+            </div>
+
+            <!-- Step 4 — Right side -->
+            <div class="roadmap-step roadmap-step--right road-reveal" data-step="4">
+                <div class="roadmap-step__dot"><span>4</span></div>
+                <div class="roadmap-step__content">
+                    <div class="roadmap-step__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="roadmap-step__text">
+                        <span class="roadmap-step__number">04</span>
+                        <h4>Ask Questions</h4>
+                        <p>Using RAG Technology, the user can chat with the paper. The system retrieves specific paragraphs to answer doubts instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Dataset Section ═══ -->
+    <section class="section section-dataset" id="dataset">
+        <div class="dataset-glow"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="dataset-content-centered">
+                <p class="section-label" style="color: rgba(0,0,0,0.4);">Training Data</p>
+                <h2 class="section-title" style="color: #0d0d0d;">Dataset</h2>
+                <p style="font-size: 16px; line-height: 1.7; margin-bottom: 8px; color: #333;">
+                    We construct a domain-specific corpus of open access scientific papers to enable 
+                    accurate summarization and document grounded question answering.
+                </p>
+                <p style="font-size: 15px; line-height: 1.7; color: #333;">
+                    Dataset sourced from <a href="https://huggingface.co" target="_blank" style="color: var(--accent-primary); font-weight: 600; text-decoration: underline;">Hugging Face</a>, 
+                    featuring research papers across multiple domains including Energy, Machine Learning, Deep Learning, and more.
+                </p>
+            </div>
+            <div class="papers-fan">
+                <!-- Left papers (fanning left) -->
+                <img src="/static/img/Paper1.png" class="fan-paper" style="--i: 0;" alt="Research paper">
+                <img src="/static/img/Paper3.png" class="fan-paper" style="--i: 1;" alt="Research paper">
+                <img src="/static/img/Paper2.png" class="fan-paper" style="--i: 2;" alt="Research paper">
+                <img src="/static/img/Paper1.png" class="fan-paper" style="--i: 3;" alt="Research paper">
+                <!-- Center paper (front, no rotation) -->
+                <img src="/static/img/Paper3.png" class="fan-paper fan-center" style="--i: 4;" alt="Research paper">
+                <!-- Right papers (fanning right) -->
+                <img src="/static/img/Paper2.png" class="fan-paper" style="--i: 5;" alt="Research paper">
+                <img src="/static/img/Paper3.png" class="fan-paper" style="--i: 6;" alt="Research paper">
+                <img src="/static/img/Paper1.png" class="fan-paper" style="--i: 7;" alt="Research paper">
+                <img src="/static/img/Paper2.png" class="fan-paper" style="--i: 8;" alt="Research paper">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CTA Section ═══ -->
+    <section class="section section-cta" id="cta">
+        <div class="container">
+            <div class="cta-inner">
+                <h2 class="text-gradient">Ready to Simplify Research?</h2>
+                <p>Upload your first paper and experience the power of AI-driven research summarization. No more jargon, no more confusion.</p>
+                <div style="display: flex; gap: 16px; justify-content: center;">
+                    <a href="/login" class="btn-primary">Get Started Free</a>
+                    <a href="#hero" class="btn-outline">Back to Top ↑</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+        <div class="container">
+            <span class="footer-brand"><span style="color: #e8712a;">निष्</span>KARSH</span>
+            <p>Built with BART-Large-CNN · PyPDF2 · ChromaDB · pyttsx3 — by Harsh Arora & Purab Bhatia</p>
+        </div>
+    </footer>
+
+    <!-- ═══ JavaScript ═══ -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Scroll Reveal (existing sections)
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ── Roadmap scroll-reveal ──
+        const roadSteps = document.querySelectorAll('.road-reveal');
+        const roadObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -60px 0px' });
+
+        roadSteps.forEach(el => roadObserver.observe(el));
+
+        // ── SVG Road progress on scroll ──
+        const progressPath = document.getElementById('roadProgressPath');
+        if (progressPath) {
+            const totalLength = progressPath.getTotalLength();
+            progressPath.style.strokeDasharray = totalLength;
+            progressPath.style.strokeDashoffset = totalLength;
+
+            const roadmapEl = document.querySelector('.roadmap');
+
+            function updateRoadProgress() {
+                if (!roadmapEl) return;
+                const rect = roadmapEl.getBoundingClientRect();
+                const windowH = window.innerHeight;
+                const roadmapTop = rect.top;
+                const roadmapHeight = rect.height;
+
+                // Calculate how far through the roadmap section we've scrolled
+                const scrolled = (windowH - roadmapTop) / (roadmapHeight + windowH * 0.3);
+                const progress = Math.min(Math.max(scrolled, 0), 1);
+                progressPath.style.strokeDashoffset = totalLength * (1 - progress);
+            }
+
+            window.addEventListener('scroll', updateRoadProgress, { passive: true });
+            updateRoadProgress();
+        }
+        // ── Papers fan scatter-in animation ──
+        const papersFan = document.querySelector('.papers-fan');
+        if (papersFan) {
+            const fanObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        papersFan.classList.add('fanned');
+                    } else {
+                        papersFan.classList.remove('fanned');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+            fanObserver.observe(papersFan);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
