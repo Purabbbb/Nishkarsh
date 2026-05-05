@@ -34,6 +34,7 @@ logger = logging.getLogger(__name__)
 def compute_metrics(eval_pred, tokenizer):
     """Compute ROUGE metrics for evaluation."""
     rouge = evaluate.load("rouge")
+    bertscore = evaluate.load("bertscore")
 
 
     predictions, labels = eval_pred
@@ -56,8 +57,20 @@ def compute_metrics(eval_pred, tokenizer):
         use_stemmer=True,
     )
 
+    # Compute BERTscore
+    bertscore_result = bertscore.compute(
+        predictions=decoded_preds,
+        references=decoded_labels,
+        lang="en",
+    )
+
     # Extract scores (evaluate returns floats)
     result = {key: float(value) * 100 for key, value in result.items() if isinstance(value, (int, float, np.number))}
+    
+    # Add averaged BERTscore metrics
+    result["bertscore_precision"] = float(np.mean(bertscore_result["precision"])) * 100
+    result["bertscore_recall"] = float(np.mean(bertscore_result["recall"])) * 100
+    result["bertscore_f1"] = float(np.mean(bertscore_result["f1"])) * 100
 
     # Add average generation length
     prediction_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in eval_pred[0]]

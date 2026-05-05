@@ -18,23 +18,28 @@
                 <a href="/dashboard" class="active">
                     <span class="nav-icon">📊</span> Dashboard
                 </a>
-                <a href="#">
-                    <span class="nav-icon">📄</span> My Papers
-                </a>
-                <a href="#">
-                    <span class="nav-icon">📜</span> History
-                </a>
+                <div style="padding: 10px 20px; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 10px;">My Papers</div>
+                <div id="historyList" style="max-height: 200px; overflow-y: auto;">
+                    {% for ds in datasets %}
+                    <a href="#" onclick="loadDataset({{ ds.id }})" style="padding: 8px 20px; font-size: 13px; display: block; color: var(--text-secondary); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ ds.filename }}">
+                        📄 {{ ds.filename }}
+                    </a>
+                    {% else %}
+                    <div style="padding: 8px 20px; font-size: 12px; color: var(--text-muted);">No papers yet</div>
+                    {% endfor %}
+                </div>
                 <a href="#">
                     <span class="nav-icon">⚙️</span> Settings
                 </a>
             </nav>
             <div class="sidebar-footer">
-                <div class="avatar">PB</div>
+                <div class="avatar">{{ current_user.username[0] | upper }}</div>
                 <div class="user-info">
-                    <div class="user-name">Purab Bhatia</div>
-                    <div class="user-email">purab@nishkarsh.ai</div>
+                    <div class="user-name">{{ current_user.username.split('@')[0] }}</div>
+                    <div class="user-email" style="font-size: 10px; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">{{ current_user.username }}</div>
                 </div>
             </div>
+            <a href="/logout" style="display:block; text-align:center; padding:10px; color:#ef4444; text-decoration:none; font-size:12px; border-top:1px solid var(--border-subtle); font-weight:bold;">Log Out</a>
         </aside>
 
         <!-- ═══ Main Content ═══ -->
@@ -258,6 +263,39 @@
                 uploadArea.style.display = 'block';
             }
         });
+
+        // ── Load Past Dataset ──
+        async function loadDataset(id) {
+            try {
+                loadingSection.classList.add('visible');
+                uploadArea.style.display = 'none';
+                resultSection.classList.remove('visible');
+                hideError();
+                
+                const res = await fetch(`/dataset/${id}`);
+                const data = await res.json();
+                
+                loadingSection.classList.remove('visible');
+                
+                if (data.error) {
+                    showError(data.error);
+                    uploadArea.style.display = 'block';
+                    return;
+                }
+                
+                sections = data.summary.sections;
+                fileName.textContent = data.filename;
+                document.getElementById('metaPages').textContent = `📄 ${data.summary.num_pages} pages`;
+                document.getElementById('metaChars').textContent = `🔤 ${data.summary.extracted_chars.toLocaleString()} chars`;
+                
+                switchTab('summary');
+                resultSection.classList.add('visible');
+            } catch (err) {
+                loadingSection.classList.remove('visible');
+                showError('Failed to load past dataset.');
+                uploadArea.style.display = 'block';
+            }
+        }
 
         // ── Tab Switching ──
         function switchTab(section) {

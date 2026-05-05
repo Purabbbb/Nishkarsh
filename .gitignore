@@ -19,6 +19,9 @@ research_summarizer/logs/
 research_summarizer/eval_tmp/
 research_summarizer/uploads/
 research_summarizer/tts_output/
+research_summarizer/instance/
+*.db
+*.sqlite
 *.log
 
 # OS generated files

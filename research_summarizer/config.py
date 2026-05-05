@@ -96,6 +96,6 @@ TTS_VOLUME = 1.0     # Volume (0.0 to 1.0)
 # ──────────────────────────────────────────────
 # Flask Server
 # ──────────────────────────────────────────────
-FLASK_HOST = "127.0.0.1"
-FLASK_PORT = 5000
-FLASK_DEBUG = False
+FLASK_HOST = os.environ.get("FLASK_HOST", "127.0.0.1")
+FLASK_PORT = int(os.environ.get("PORT", 5000))
+FLASK_DEBUG = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
